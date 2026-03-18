@@ -991,8 +991,11 @@ function updateCarsSummary() {
   el.classList.add('show');
 }
 
-// Update summary when hours change
+// Delegated change listener — handles dish checkboxes and cars hours
 document.addEventListener('change', e => {
+  if (e.target.classList.contains('dish-cb')) {
+    toggleDish(e.target.dataset.dish, e.target.checked);
+  }
   if (e.target.id === 'b-cars-hours') updateCarsSummary();
 });
 
@@ -1061,8 +1064,7 @@ function renderMenuOnForm() {
         const id = 'dish-' + d.name.replace(/[^a-z]/gi,'_');
         const checked = selectedDishes.has(d.name);
         return '<label class="menu-item" style="cursor:pointer;gap:10px;align-items:flex-start;padding:4px 0">' +
-          '<input type="checkbox" id="' + id + '" ' + (checked?'checked':'') + ' ' +
-          'onchange="toggleDish('' + d.name.replace(/'/g,"\'") + '',this.checked)" ' +
+          '<input type="checkbox" class="dish-cb" id="' + id + '" data-dish="' + d.name.replace(/"/g,'&quot;') + '" ' + (checked?'checked':'') + ' ' +
           'style="width:15px;height:15px;flex-shrink:0;margin-top:3px;accent-color:var(--fern)">' +
           '<div><span class="menu-item-name">' + d.name + '</span> ' +
           '<span class="menu-item-desc">— ' + d.desc + '</span></div>' +
