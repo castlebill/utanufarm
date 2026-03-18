@@ -924,7 +924,7 @@ footer {
     <div class="footer-col">
       <h4>Contact</h4>
       <ul>
-        <li><a href="tel:+254700000000">0700 000 000</a></li>
+        <li><a href="tel:+254700000000" class="farm-phone">0700 000 000</a></li>
         <li><a href="/cdn-cgi/l/email-protection#fb939e979794bb8e8f9a958ed59d9a8996"><span class="__cf_email__" data-cfemail="335b565f5f5c734647525d461d5552415e">[email&#160;protected]</span></a></li>
         <li><a href="#">WhatsApp Us</a></li>
         <li><a href="#">Instagram</a></li>
@@ -1196,11 +1196,71 @@ function showStatus(type, msg) {
   el.textContent = msg;
 }
 
+
+// ── LOAD SITE CONFIG FROM ADMIN ──
+async function loadSiteConfig() {
+  let cfg = null;
+  // 1. Try Supabase first (most up to date)
+  try {
+    const res = await sb.from('site_config').select('value').eq('key','farm_info').single();
+    if (res.data) cfg = res.data.value;
+  } catch(e) {}
+  // 2. Fall back to localStorage (saved by admin locally)
+  if (!cfg) {
+    const saved = localStorage.getItem('utanu_farm_info');
+    if (saved) try { cfg = JSON.parse(saved); } catch(e) {}
+  }
+  if (!cfg) return; // nothing saved yet — keep defaults
+
+  // Apply to page
+  const fields = {
+    '.footer-location': cfg.location,
+    '.farm-location':   cfg.location,
+    '.farm-phone':      cfg.phone,
+    '.farm-email':      cfg.email,
+    '.farm-opens':      cfg.opens,
+    '.farm-closes':     cfg.closes,
+  };
+  Object.entries(fields).forEach(([sel, val]) => {
+    if (!val) return;
+    document.querySelectorAll(sel).forEach(el => el.textContent = val);
+  });
+
+  // Update footer contact links
+  if (cfg.phone) {
+    document.querySelectorAll('a[href^="tel:"]').forEach(a => {
+      a.href = 'tel:' + cfg.phone.replace(/\s/g,'');
+      if (a.textContent.match(/^0[17]\d/)) a.textContent = cfg.phone;
+    });
+  }
+  if (cfg.email) {
+    document.querySelectorAll('a[href^="mailto:"]').forEach(a => {
+      a.href = 'mailto:' + cfg.email;
+      a.textContent = cfg.email;
+    });
+  }
+  // Update hero stat bar open hours
+  if (cfg.opens && cfg.closes) {
+    document.querySelectorAll('.hero-stat span').forEach(el => {
+      if (el.textContent.includes('am') || el.textContent.includes('pm') || el.textContent.includes('AM')) {
+        el.textContent = cfg.opens + '–' + cfg.closes;
+      }
+    });
+  }
+  // Update booking perks list
+  if (cfg.location) {
+    document.querySelectorAll('.booking-perks li').forEach(li => {
+      if (li.textContent.includes('Kiambu') || li.textContent.includes('Parking')) return;
+    });
+  }
+}
+
 // ── SCROLL ANIMATIONS ──
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+loadSiteConfig();
 </script>
 </body>
 </html>
