@@ -568,7 +568,7 @@ footer {
   <div class="hero-bg"></div>
   <div class="hero-texture"></div>
   <div style="position:relative; z-index:1;">
-    <div class="hero-badge">🌿 Kiambu County, Kenya</div>
+    <div class="hero-badge" id="hero-location-badge">🌿 Kiambu County, Kenya</div>
     <h1>Where the city<br>finds its <em>breath</em></h1>
     <p>Farm experiences, kids programs, and nature retreats rooted in Kenya's living soil.</p>
     <div class="hero-actions">
@@ -865,7 +865,7 @@ footer {
   <div class="footer-grid">
     <div class="footer-brand">
       <span class="logo">Utanu<span>Farm</span></span>
-      <p>A working farm and nature experience space in Kiambu County, Kenya. Open every day from 7am to 6pm.</p>
+      <p id="footer-farm-desc">A working farm and nature experience space in Kiambu County, Kenya. Open every day from 7am to 6pm.</p>
     </div>
     <div class="footer-col">
       <h4>Experiences</h4>
@@ -1337,10 +1337,30 @@ async function loadSiteConfig() {
       }
     });
   }
-  // Update booking perks list
+  // Update hero badge location
   if (cfg.location) {
-    document.querySelectorAll('.booking-perks li').forEach(li => {
-      if (li.textContent.includes('Kiambu') || li.textContent.includes('Parking')) return;
+    const badge = document.getElementById('hero-location-badge');
+    if (badge) badge.textContent = '🌿 ' + cfg.location;
+  }
+
+  // Update footer farm description
+  if (cfg.location || cfg.opens || cfg.closes) {
+    const desc = document.getElementById('footer-farm-desc');
+    if (desc) {
+      const loc = cfg.location || 'Kenya';
+      const opens = cfg.opens || '7am';
+      const closes = cfg.closes || '6pm';
+      desc.textContent = 'A working farm and nature experience space in ' + loc + '. Open every day from ' + opens + ' to ' + closes + '.';
+    }
+  }
+
+  // Update farm name in logo if changed
+  if (cfg.name) {
+    document.querySelectorAll('.logo').forEach(el => {
+      // Only update the text node, preserve any <span> children
+      if (el.childNodes.length && el.childNodes[0].nodeType === 3) {
+        el.childNodes[0].textContent = cfg.name.replace(/farm$/i,'').trim();
+      }
     });
   }
 }
