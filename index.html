@@ -925,7 +925,7 @@ footer {
       <h4>Contact</h4>
       <ul>
         <li><a href="tel:+254700000000">0700 000 000</a></li>
-        <li><a href="mailto:hello@utanu.farm">hello@utanu.farm</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#fb939e979794bb8e8f9a958ed59d9a8996"><span class="__cf_email__" data-cfemail="335b565f5f5c734647525d461d5552415e">[email&#160;protected]</span></a></li>
         <li><a href="#">WhatsApp Us</a></li>
         <li><a href="#">Instagram</a></li>
         <li><a href="#">Facebook</a></li>
@@ -952,7 +952,13 @@ footer {
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
+<script>
+// Fallback: if unpkg blocked, load from cdnjs
+if (typeof supabase === 'undefined') {
+  document.write('<scr' + 'ipt src="https://cdnjs.cloudflare.com/ajax/libs/supabase-js/2.39.3/umd/supabase.min.js" crossorigin="anonymous"><\/scr' + 'ipt>');
+}
+</script>
 <script>
 // ── SUPABASE CLIENT ──
 const SUPABASE_URL     = 'https://owfrejfletnzwvcjzwme.supabase.co';
@@ -1194,4 +1200,7 @@ function showStatus(type, msg) {
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
-document.querySelectorAll('.fade-up').forEach(el
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
