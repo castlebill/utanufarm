@@ -532,6 +532,11 @@ footer {
 }
 .cars-selected-summary.show { display: block; }
 
+
+/* Cars section visibility by booking type */
+.cars-section { display: none; }
+.cars-section.visible { display: block; }
+
 /* ── ANIMATIONS ── */
 @media (prefers-reduced-motion: no-preference) {
   .fade-up {
@@ -732,68 +737,29 @@ footer {
               <div class="menu-card">
                 <div class="menu-card-header">
                   <div>
-                    <h4>Today's Farm-to-Table Menu</h4>
-                    <p>Seasonal ingredients harvested right here at Utanu</p>
+                    <h4>Farm-to-Table Menu</h4>
+                    <p id="menu-header-sub">Choose your dishes below</p>
                   </div>
-                  <div class="menu-price-tag">KES 800 / person</div>
+                  <div class="menu-price-tag" id="menu-price-tag">KES 800 / person</div>
                 </div>
-                <div class="menu-courses">
-                  <div class="menu-course">
-                    <div class="menu-course-label">To Start</div>
-                    <div class="menu-items">
-                      <div class="menu-item">
-                        <span class="menu-item-dot"></span>
-                        <div><span class="menu-item-name">Garden vegetable soup</span> <span class="menu-item-desc">— slow-cooked with farm herbs &amp; bone broth</span></div>
-                      </div>
-                      <div class="menu-item">
-                        <span class="menu-item-dot"></span>
-                        <div><span class="menu-item-name">Fresh passion fruit juice</span> <span class="menu-item-desc">— pressed from our orchard, no added sugar</span></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="menu-course">
-                    <div class="menu-course-label">Main Course</div>
-                    <div class="menu-items">
-                      <div class="menu-item">
-                        <span class="menu-item-dot"></span>
-                        <div><span class="menu-item-name">Slow-roasted farm chicken</span> <span class="menu-item-desc">— free-range, marinated in local spices &amp; lemon</span></div>
-                      </div>
-                      <div class="menu-item">
-                        <span class="menu-item-dot"></span>
-                        <div><span class="menu-item-name">Githeri wa shamba</span> <span class="menu-item-desc">— heirloom beans &amp; maize grown on the farm</span></div>
-                      </div>
-                      <div class="menu-item">
-                        <span class="menu-item-dot"></span>
-                        <div><span class="menu-item-name">Steamed seasonal greens</span> <span class="menu-item-desc">— sukuma wiki, managu, or terere depending on season</span></div>
-                      </div>
-                      <div class="menu-item">
-                        <span class="menu-item-dot"></span>
-                        <div><span class="menu-item-name">Ugali ya wimbi</span> <span class="menu-item-desc">— finger millet, stone-ground on site</span></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="menu-course">
-                    <div class="menu-course-label">To Finish</div>
-                    <div class="menu-items">
-                      <div class="menu-item">
-                        <span class="menu-item-dot"></span>
-                        <div><span class="menu-item-name">Roasted sweet potato &amp; honey</span> <span class="menu-item-desc">— served warm with raw Utanu honey</span></div>
-                      </div>
-                      <div class="menu-item">
-                        <span class="menu-item-dot"></span>
-                        <div><span class="menu-item-name">Seasonal fruit platter</span> <span class="menu-item-desc">— picked the morning of your visit</span></div>
-                      </div>
-                    </div>
-                  </div>
+                <div id="menu-courses-container" class="menu-courses">
+                  <!-- rendered by renderMenuOnForm() -->
                 </div>
-                <div class="menu-note">
-                  🌿 Vegetarian options available for all dishes. Dietary needs? Add a note below and our kitchen will accommodate you.
+                <div id="menu-cost-bar" style="display:none;margin:0 20px 14px;padding:12px 16px;background:rgba(107,127,82,0.1);border:1.5px solid rgba(107,127,82,0.3);border-radius:10px;display:none">
+                  <div style="display:flex;justify-content:space-between;align-items:center">
+                    <span style="font-size:.85rem;color:var(--fern);font-weight:500">🍽️ Selected meal cost</span>
+                    <span id="menu-cost-display" style="font-size:1rem;font-weight:600;color:var(--bark)">KES 0</span>
+                  </div>
+                  <div style="font-size:.75rem;color:var(--muted);margin-top:3px" id="menu-cost-detail"></div>
+                </div>
+                <div class="menu-note" id="menu-note-text">
+                  🌿 Vegetarian options available for all dishes. Add dietary needs in special requests.
                 </div>
               </div>
             </div>
           </div>
-          <div class="form-group full">
-            <label>🏎️ Classic Car Hire — Optional Add-On</label>
+          <div class="form-group full cars-section" id="cars-section">
+            <label>🏎️ Classic Car Hire <span style="font-size:.75rem;color:var(--stone)">(available for events, weddings, birthdays &amp; corporate)</span></label>
             <label class="food-check-wrap" id="cars-check-label" onclick="toggleCars(document.getElementById('b-cars').checked)">
               <input type="checkbox" id="b-cars" onchange="toggleCars(this.checked)" onclick="event.stopPropagation()">
               <span id="cars-check-text">Add a classic car experience (weddings, events, birthdays &amp; more)</span>
@@ -1046,15 +1012,121 @@ function toggleCars(checked) {
 }
 
 // ── MENU TOGGLE ──
+// ── MENU DATA (synced from admin menuData or localStorage) ──
+function getMenuData() {
+  const saved = localStorage.getItem('utanu_menu');
+  if (saved) { try { return JSON.parse(saved); } catch(e) {} }
+  return {
+    price: 800,
+    label: 'Farm-to-table meal',
+    note: 'Vegetarian options available for all dishes. Add dietary needs in special requests.',
+    courses: ['To Start', 'Main Course', 'To Finish'],
+    dishes: [
+      {course:'To Start',    name:'Garden vegetable soup',      desc:'Slow-cooked with farm herbs & bone broth'},
+      {course:'To Start',    name:'Fresh passion fruit juice',  desc:'Pressed from our orchard, no added sugar'},
+      {course:'Main Course', name:'Slow-roasted farm chicken',  desc:'Free-range, marinated in local spices & lemon'},
+      {course:'Main Course', name:'Githeri wa shamba',          desc:'Heirloom beans & maize grown on the farm'},
+      {course:'Main Course', name:'Steamed seasonal greens',    desc:'Sukuma wiki, managu, or terere by season'},
+      {course:'Main Course', name:'Ugali ya wimbi',             desc:'Finger millet, stone-ground on site'},
+      {course:'To Finish',   name:'Roasted sweet potato & honey', desc:'Served warm with raw Utanu honey'},
+      {course:'To Finish',   name:'Seasonal fruit platter',     desc:'Picked the morning of your visit'}
+    ]
+  };
+}
+
+let selectedDishes = new Set(); // tracks which dish names are checked
+
+function renderMenuOnForm() {
+  const menu = getMenuData();
+  // Update price tag
+  const priceTag = document.getElementById('menu-price-tag');
+  if (priceTag) priceTag.textContent = 'KES ' + (menu.price||800).toLocaleString() + ' / person';
+  // Update food check label
+  const foodText = document.getElementById('food-check-text');
+  if (foodText) foodText.textContent = 'Include ' + (menu.label||'farm-to-table meal') + ' (+ KES ' + (menu.price||800).toLocaleString() + ' per person)';
+  // Update note
+  const noteEl = document.getElementById('menu-note-text');
+  if (noteEl && menu.note) noteEl.textContent = '🌿 ' + menu.note;
+  // Group dishes by course
+  const courses = menu.courses || [];
+  const container = document.getElementById('menu-courses-container');
+  if (!container) return;
+  container.innerHTML = courses.map(course => {
+    const dishes = (menu.dishes || []).filter(d => d.course === course);
+    if (!dishes.length) return '';
+    return '<div class="menu-course">' +
+      '<div class="menu-course-label">' + course + '</div>' +
+      '<div class="menu-items">' +
+      dishes.map(d => {
+        const id = 'dish-' + d.name.replace(/[^a-z]/gi,'_');
+        const checked = selectedDishes.has(d.name);
+        return '<label class="menu-item" style="cursor:pointer;gap:10px;align-items:flex-start;padding:4px 0">' +
+          '<input type="checkbox" id="' + id + '" ' + (checked?'checked':'') + ' ' +
+          'onchange="toggleDish('' + d.name.replace(/'/g,"\'") + '',this.checked)" ' +
+          'style="width:15px;height:15px;flex-shrink:0;margin-top:3px;accent-color:var(--fern)">' +
+          '<div><span class="menu-item-name">' + d.name + '</span> ' +
+          '<span class="menu-item-desc">— ' + d.desc + '</span></div>' +
+          '</label>';
+      }).join('') +
+      '</div></div>';
+  }).join('');
+}
+
+function toggleDish(name, checked) {
+  if (checked) selectedDishes.add(name);
+  else selectedDishes.delete(name);
+  updateMealCost();
+}
+
+function updateMealCost() {
+  const menu = getMenuData();
+  const people = parseInt(document.getElementById('b-people').value) || 1;
+  const pricePerPerson = menu.price || 800;
+  const costBar = document.getElementById('menu-cost-bar');
+  const costDisplay = document.getElementById('menu-cost-display');
+  const costDetail = document.getElementById('menu-cost-detail');
+  if (!costBar) return;
+  if (selectedDishes.size === 0) {
+    costBar.style.display = 'none';
+    return;
+  }
+  const total = people * pricePerPerson;
+  costBar.style.display = '';
+  if (costDisplay) costDisplay.textContent = 'KES ' + total.toLocaleString();
+  if (costDetail) costDetail.textContent =
+    people + ' person' + (people>1?'s':'') + ' × KES ' + pricePerPerson.toLocaleString() +
+    ' · ' + selectedDishes.size + ' dish' + (selectedDishes.size>1?'es':'') + ' selected';
+}
+
 function toggleMenu(checked) {
   const reveal = document.getElementById('menu-reveal');
   const label  = document.getElementById('food-check-label');
   if (checked) {
     reveal.classList.add('open');
     label.style.borderColor = 'var(--fern)';
+    renderMenuOnForm();
   } else {
     reveal.classList.remove('open');
     label.style.borderColor = '';
+    selectedDishes.clear();
+    const cb = document.getElementById('menu-cost-bar');
+    if (cb) cb.style.display = 'none';
+  }
+}
+
+// ── CARS: show only for event/wedding/birthday/corporate/catering ──
+const CAR_TYPES = new Set(['event','birthday','corporate','catering']);
+
+function updateCarsVisibility(type) {
+  const section = document.getElementById('cars-section');
+  if (!section) return;
+  if (CAR_TYPES.has(type)) {
+    section.style.display = '';
+  } else {
+    section.style.display = 'none';
+    // Reset cars if hidden
+    const cb = document.getElementById('b-cars');
+    if (cb && cb.checked) { cb.checked = false; toggleCars(false); }
   }
 }
 
@@ -1063,8 +1135,19 @@ document.querySelectorAll('.form-toggle input').forEach(radio => {
   radio.addEventListener('change', () => {
     document.querySelectorAll('.form-toggle').forEach(l => l.classList.remove('active'));
     radio.parentElement.classList.add('active');
+    updateCarsVisibility(radio.value);
   });
 });
+
+// Update meal cost when people count changes
+document.getElementById('b-people')?.addEventListener('input', () => {
+  if (document.getElementById('b-food')?.checked) updateMealCost();
+});
+
+// Init: hide cars on load (family is default), render menu data
+(function() {
+  updateCarsVisibility('family');
+})();
 
 // Set min date to today
 const today = new Date().toISOString().split('T')[0];
@@ -1075,6 +1158,7 @@ function prefillBooking(type, name) {
   document.querySelector(`input[value="${type}"]`).checked = true;
   document.querySelectorAll('.form-toggle').forEach(l => l.classList.remove('active'));
   document.getElementById(`t-${type}`).classList.add('active');
+  updateCarsVisibility(type);
   document.getElementById('book').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -1088,7 +1172,7 @@ function openModal(data) {
     <strong>${data.name}</strong> · ${data.phone}<br>
     ${typeLabels[data.type] || data.type} · ${data.people} people<br>
     📅 ${data.booking_date}${data.time_slot ? ' at ' + data.time_slot : ''}
-    ${data.food_included ? `<br><br>🍽️ <strong>Farm meal included</strong> (KES ${(data.people * 800).toLocaleString()} total)<br><span style="font-size:.82rem;color:var(--stone)">Roasted chicken · Githeri wa shamba · Wimbi ugali · Seasonal fruits</span>` : ''}
+    ${data.food_included ? `<br><br>🍽️ <strong>Farm meal</strong> (KES ${data.meal_cost ? data.meal_cost.toLocaleString() : (data.people * 800).toLocaleString()} total)<br><span style="font-size:.82rem;color:var(--stone)">${data.dishes_selected && data.dishes_selected.length ? data.dishes_selected.join(' · ') : 'Full farm menu'}</span>` : ''}
     ${data.special_requests ? '<br><br>📝 ' + data.special_requests : ''}
     ${data.cars_selected && data.cars_selected.length > 0 ? '<br><br>🏎️ <strong>Classic cars:</strong> ' + data.cars_selected.join(', ') + '<br><span style="font-size:.82rem;color:var(--stone)">' + data.cars_hours + 'h hire · Pickup: ' + (data.cars_pickup || 'TBC') + '</span>' : ''}
   `;
@@ -1133,11 +1217,17 @@ document.getElementById('booking-form').addEventListener('submit', e => {
   const carsPickup = document.getElementById('b-cars-pickup').value.trim();
   const carsSelected = carsWanted ? Array.from(selectedCars).map(id => KARANI_FLEET.find(c=>c.id===id)?.name).filter(Boolean) : [];
 
+  const menu = getMenuData();
+  const mealCost = food && selectedDishes.size > 0 ? people * (menu.price || 800) : (food ? people * (menu.price || 800) : 0);
+  const dishesSelected = food && selectedDishes.size > 0 ? Array.from(selectedDishes) : [];
+
   const bookingData = {
     name, phone, email: email || null,
     type, people, booking_date: date,
     time_slot: slot || null,
     food_included: food,
+    meal_cost: mealCost,
+    dishes_selected: dishesSelected,
     cars_requested: carsWanted && carsSelected.length > 0,
     cars_selected: carsSelected,
     cars_hours: carsSelected.length > 0 ? carsHours : null,
