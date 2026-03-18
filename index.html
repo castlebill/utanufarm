@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Utanu Farm — Where Nature Lives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --soil: #3d2b1a;
+  --bark: #5c3d22;
+  --clay: #8b5a2b;
+  --sand: #c4956a;
+  --wheat: #e8c99a;
+  --cream: #f7f0e6;
+  --fog:   #ede8df;
+  --moss:  #4a5e3a;
+  --fern:  #6b7f52;
+  --sage:  #9aaa80;
+  --leaf:  #b8c89a;
+  --sky:   #7a9fb5;
+  --stone: #8c8478;
+  --text:  #2a1f14;
+  --muted: #6b5d4f;
+  --r: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 5%;
+  background: rgba(247,240,230,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(139,90,43,0.12);
+  transition: all .3s;
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--bark);
+  letter-spacing: -0.5px;
+}
+.logo span { color: var(--moss); font-style: italic; }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a { text-decoration: none; color: var(--muted); font-size: .9rem; font-weight: 400; letter-spacing: .3px; transition: color .2s; }
+.nav-links a:hover { color: var(--bark); }
+.nav-cta {
+  background: var(--moss); color: #fff; border: none;
+  padding: 10px 24px; border-radius: 50px; font-family: 'DM Sans', sans-serif;
+  font-size: .9rem; cursor: pointer; transition: all .2s;
+  text-decoration: none; display: inline-block;
+}
+.nav-cta:hover { background: var(--bark); transform: translateY(-1px); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 5% 80px;
+  position: relative;
+  background: var(--soil);
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 60% at 60% 30%, rgba(74,94,58,0.35) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 20% 80%, rgba(92,61,34,0.4) 0%, transparent 60%),
+    linear-gradient(165deg, #2a1f14 0%, #3d2b1a 40%, #1e2b18 100%);
+}
+.hero-texture {
+  position: absolute; inset: 0; opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-badge {
+  display: inline-block;
+  border: 1px solid rgba(184,200,154,0.5);
+  color: var(--leaf);
+  font-size: .78rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 50px;
+  margin-bottom: 24px;
+  width: fit-content;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 600;
+  color: var(--cream);
+  line-height: 1.1;
+  max-width: 750px;
+  margin-bottom: 24px;
+}
+.hero h1 em { color: var(--sage); font-style: italic; }
+.hero p {
+  color: rgba(232,201,154,0.75);
+  font-size: 1.1rem;
+  max-width: 480px;
+  font-weight: 300;
+  margin-bottom: 40px;
+}
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--fern); color: #fff;
+  padding: 14px 32px; border-radius: 50px; border: none;
+  font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500;
+  cursor: pointer; transition: all .25s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { background: var(--moss); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(74,94,58,0.4); }
+.btn-ghost {
+  background: transparent; color: var(--wheat);
+  padding: 14px 32px; border-radius: 50px; border: 1px solid rgba(232,201,154,0.3);
+  font-family: 'DM Sans', sans-serif; font-size: 1rem;
+  cursor: pointer; transition: all .25s; text-decoration: none; display: inline-block;
+}
+.btn-ghost:hover { border-color: var(--wheat); background: rgba(232,201,154,0.08); }
+.hero-scroll {
+  position: absolute; bottom: 30px; right: 5%;
+  display: flex; align-items: center; gap: 10px;
+  color: rgba(232,201,154,0.5); font-size: .8rem; letter-spacing: 1px;
+}
+.scroll-line {
+  width: 40px; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(232,201,154,0.5));
+}
+.hero-stat-bar {
+  position: absolute; bottom: 0; left: 5%; right: 5%;
+  display: flex; gap: 0; border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 20px 0;
+}
+.hero-stat {
+  flex: 1; text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.07);
+  padding: 4px 0;
+}
+.hero-stat:last-child { border-right: none; }
+.hero-stat strong {
+  display: block; font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; color: var(--wheat); font-weight: 600;
+}
+.hero-stat span { font-size: .75rem; color: rgba(232,201,154,0.5); letter-spacing: .5px; }
+
+/* ── SECTION COMMONS ── */
+section { padding: 96px 5%; }
+.section-label {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: .75rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--fern); margin-bottom: 16px;
+}
+.section-label::before { content: ''; width: 24px; height: 1px; background: var(--fern); }
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600; color: var(--soil); line-height: 1.2;
+  margin-bottom: 16px;
+}
+.section-sub { color: var(--muted); font-size: 1.05rem; font-weight: 300; max-width: 540px; }
+
+/* ── EXPERIENCES ── */
+.experiences-section { background: var(--fog); }
+.exp-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px; margin-top: 56px;
+}
+.exp-card {
+  background: var(--cream); border-radius: 16px; overflow: hidden;
+  border: 1px solid rgba(139,90,43,0.1);
+  transition: all .3s; cursor: pointer;
+}
+.exp-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(61,43,26,0.12); }
+.exp-card-img {
+  height: 200px; display: flex; align-items: center; justify-content: center;
+  font-size: 3.5rem; position: relative;
+}
+.exp-card-img.family  { background: linear-gradient(135deg, #c4956a22, #8b5a2b18); }
+.exp-card-img.school  { background: linear-gradient(135deg, #9aaa8022, #4a5e3a18); }
+.exp-card-img.corp    { background: linear-gradient(135deg, #7a9fb522, #5c3d2218); }
+.exp-card-img.bday    { background: linear-gradient(135deg, #e8c99a22, #c4956a18); }
+.exp-card-img.walk    { background: linear-gradient(135deg, #b8c89a22, #6b7f5218); }
+.exp-card-body { padding: 24px; }
+.exp-type {
+  font-size: .72rem; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--fern); margin-bottom: 8px; font-weight: 500;
+}
+.exp-card-body h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; color: var(--soil); margin-bottom: 10px;
+}
+.exp-card-body p { color: var(--muted); font-size: .9rem; font-weight: 300; margin-bottom: 20px; }
+.exp-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid rgba(139,90,43,0.1); padding-top: 16px;
+}
+.exp-price { font-size: 1.1rem; color: var(--bark); font-weight: 500; }
+.exp-price span { font-size: .75rem; color: var(--muted); font-weight: 300; }
+.exp-book {
+  background: var(--moss); color: #fff; border: none;
+  padding: 8px 20px; border-radius: 50px; font-size: .85rem;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: all .2s;
+}
+.exp-book:hover { background: var(--bark); }
+
+/* ── BOOKING SECTION ── */
+.booking-section { background: var(--cream); }
+.booking-wrap {
+  display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px;
+  align-items: start; margin-top: 56px;
+}
+.booking-info {}
+.booking-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; color: var(--soil); margin-bottom: 20px;
+}
+.booking-info p { color: var(--muted); font-weight: 300; margin-bottom: 32px; }
+.booking-perks { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.booking-perks li {
+  display: flex; align-items: center; gap: 12px;
+  color: var(--muted); font-size: .95rem;
+}
+.perk-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--fog); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 14px; color: var(--fern);
+}
+.booking-form-card {
+  background: var(--fog); border-radius: 20px; padding: 40px;
+  border: 1px solid rgba(139,90,43,0.1);
+}
+.form-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; color: var(--soil); margin-bottom: 28px;
+}
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-group label { font-size: .8rem; font-weight: 500; color: var(--bark); letter-spacing: .3px; }
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: var(--cream); border: 1.5px solid rgba(139,90,43,0.15);
+  border-radius: 10px; padding: 12px 16px;
+  font-family: 'DM Sans', sans-serif; font-size: .95rem; color: var(--text);
+  transition: border-color .2s; outline: none; width: 100%;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--fern); }
+.form-group textarea { resize: vertical; min-height: 80px; }
+.form-toggle-group {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px;
+}
+.form-toggle {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 18px; border-radius: 50px;
+  border: 1.5px solid rgba(139,90,43,0.2); cursor: pointer;
+  font-size: .88rem; color: var(--muted); font-family: 'DM Sans', sans-serif;
+  transition: all .2s; background: var(--cream); user-select: none;
+}
+.form-toggle input { display: none; }
+.form-toggle.active { border-color: var(--fern); color: var(--moss); background: rgba(107,127,82,0.08); }
+.food-check-wrap {
+  display: flex; align-items: center; gap: 10px; cursor: pointer;
+  padding: 14px 16px; background: var(--cream); border-radius: 10px;
+  border: 1.5px solid rgba(139,90,43,0.15); transition: border-color .2s;
+}
+.food-check-wrap:hover { border-color: var(--fern); }
+.food-check-wrap input { width: 16px; height: 16px; accent-color: var(--fern); }
+.food-check-wrap span { font-size: .9rem; color: var(--muted); }
+.form-submit {
+  width: 100%; background: var(--moss); color: #fff; border: none;
+  padding: 16px; border-radius: 12px; font-family: 'DM Sans', sans-serif;
+  font-size: 1rem; font-weight: 500; cursor: pointer;
+  transition: all .25s; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.form-submit:hover { background: var(--bark); transform: translateY(-1px); }
+.form-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+.form-note { text-align: center; font-size: .78rem; color: var(--stone); margin-top: 12px; }
+
+/* STATUS MESSAGES */
+.status-msg {
+  display: none; padding: 14px 18px; border-radius: 10px;
+  font-size: .9rem; margin-top: 16px; text-align: center;
+}
+.status-msg.success { display: block; background: rgba(74,94,58,0.12); color: var(--moss); border: 1px solid rgba(74,94,58,0.2); }
+.status-msg.error   { display: block; background: rgba(180,60,40,0.08); color: #8b2a1a; border: 1px solid rgba(180,60,40,0.15); }
+.status-msg.loading { display: block; background: rgba(139,90,43,0.08); color: var(--clay); border: 1px solid rgba(139,90,43,0.15); }
+
+/* ── BLOG PREVIEW ── */
+.blog-section { background: var(--fog); }
+.blog-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 24px; margin-top: 56px; }
+.blog-card {
+  background: var(--cream); border-radius: 16px; overflow: hidden;
+  border: 1px solid rgba(139,90,43,0.1); transition: all .3s;
+}
+.blog-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(61,43,26,0.1); }
+.blog-card-img {
+  height: 220px; display: flex; align-items: flex-end; padding: 20px;
+  font-size: 2rem; position: relative;
+}
+.blog-card:nth-child(1) .blog-card-img { background: linear-gradient(135deg, #4a5e3a, #2a1f14); height: 260px; }
+.blog-card:nth-child(2) .blog-card-img { background: linear-gradient(135deg, #8b5a2b, #3d2b1a); }
+.blog-card:nth-child(3) .blog-card-img { background: linear-gradient(135deg, #5c3d22, #2a1f14); }
+.blog-card-body { padding: 24px; }
+.blog-tag {
+  display: inline-block; font-size: .72rem; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--fern); margin-bottom: 10px;
+}
+.blog-card-body h3 {
+  font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--soil);
+  margin-bottom: 8px; line-height: 1.35;
+}
+.blog-card-body p { color: var(--muted); font-size: .875rem; font-weight: 300; }
+.blog-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
+.blog-meta span { font-size: .78rem; color: var(--stone); }
+.blog-link { font-size: .82rem; color: var(--fern); text-decoration: none; font-weight: 500; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--soil); color: var(--wheat);
+  padding: 64px 5% 32px;
+}
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer-brand .logo { font-size: 1.3rem; margin-bottom: 12px; display: block; }
+.footer-brand p { font-size: .875rem; color: rgba(232,201,154,0.6); font-weight: 300; line-height: 1.7; }
+.footer-col h4 { font-size: .8rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--sage); margin-bottom: 16px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul li a { text-decoration: none; color: rgba(232,201,154,0.6); font-size: .875rem; transition: color .2s; }
+.footer-col ul li a:hover { color: var(--wheat); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.07); padding-top: 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-bottom p { font-size: .8rem; color: rgba(232,201,154,0.4); }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(42,31,20,0.7); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center; padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--cream); border-radius: 20px; padding: 40px;
+  max-width: 500px; width: 100%; position: relative;
+  border: 1px solid rgba(139,90,43,0.15);
+}
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  background: var(--fog); border: none; border-radius: 50%; width: 32px; height: 32px;
+  cursor: pointer; font-size: 1rem; color: var(--muted); transition: all .2s;
+}
+.modal-close:hover { background: var(--wheat); }
+.modal h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--soil); margin-bottom: 8px; }
+.modal p { color: var(--muted); font-size: .9rem; margin-bottom: 24px; }
+.modal-actions { display: flex; gap: 12px; margin-top: 8px; }
+.modal-confirm {
+  flex: 1; background: var(--moss); color: #fff; border: none;
+  padding: 12px; border-radius: 10px; font-family: 'DM Sans', sans-serif;
+  font-size: .95rem; cursor: pointer; transition: all .2s;
+}
+.modal-confirm:hover { background: var(--bark); }
+.modal-cancel {
+  flex: 1; background: var(--fog); color: var(--muted); border: none;
+  padding: 12px; border-radius: 10px; font-family: 'DM Sans', sans-serif;
+  font-size: .95rem; cursor: pointer; transition: all .2s;
+}
+.modal-cancel:hover { background: var(--wheat); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .booking-wrap { grid-template-columns: 1fr; gap: 40px; }
+  .blog-grid { grid-template-columns: 1fr 1fr; }
+  .blog-grid .blog-card:last-child { display: none; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none; }
+}
+@media (max-width: 600px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2.5rem; }
+  .hero-stat-bar { display: none; }
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+/* ── MENU REVEAL ── */
+.menu-reveal {
+  max-height: 0; overflow: hidden;
+  transition: max-height .45s cubic-bezier(0.4,0,0.2,1), opacity .35s ease;
+  opacity: 0;
+}
+.menu-reveal.open {
+  max-height: 700px; opacity: 1;
+}
+.menu-card {
+  margin-top: 14px;
+  background: var(--cream);
+  border: 1.5px solid rgba(107,127,82,0.25);
+  border-radius: 14px; overflow: hidden;
+}
+.menu-card-header {
+  background: var(--moss); color: #fff;
+  padding: 14px 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+.menu-card-header h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 600; line-height: 1.2;
+}
+.menu-card-header p { font-size: .78rem; opacity: .8; font-weight: 300; }
+.menu-price-tag {
+  margin-left: auto; background: rgba(255,255,255,0.18);
+  border-radius: 50px; padding: 4px 12px;
+  font-size: .8rem; font-weight: 500; white-space: nowrap;
+}
+.menu-courses { padding: 0 20px 18px; }
+.menu-course {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(139,90,43,0.1);
+}
+.menu-course:last-child { border-bottom: none; }
+.menu-course-label {
+  font-size: .68rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--fern); font-weight: 500; margin-bottom: 8px;
+}
+.menu-items { display: flex; flex-direction: column; gap: 5px; }
+.menu-item {
+  display: flex; align-items: baseline; gap: 10px;
+  font-size: .9rem; color: var(--text);
+}
+.menu-item-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--sage); flex-shrink: 0; margin-top: 7px;
+}
+.menu-item-name { font-weight: 400; }
+.menu-item-desc { font-size: .78rem; color: var(--stone); font-weight: 300; font-style: italic; }
+.menu-note {
+  margin: 10px 20px 14px;
+  background: rgba(107,127,82,0.07);
+  border-left: 3px solid var(--sage);
+  padding: 10px 14px; border-radius: 0 8px 8px 0;
+  font-size: .8rem; color: var(--muted); font-weight: 300;
+}
+
+
+/* ── CLASSIC CARS REVEAL ── */
+.cars-reveal {
+  max-height: 0; overflow: hidden;
+  transition: max-height .5s cubic-bezier(0.4,0,0.2,1), opacity .4s ease;
+  opacity: 0;
+}
+.cars-reveal.open { max-height: 1400px; opacity: 1; }
+.cars-card {
+  margin-top: 14px;
+  background: var(--cream);
+  border: 1.5px solid rgba(92,61,34,0.25);
+  border-radius: 14px; overflow: hidden;
+}
+.cars-card-header {
+  background: linear-gradient(135deg, var(--bark), var(--soil));
+  color: #fff; padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.cars-card-header h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 600;
+}
+.cars-card-header p { font-size: .78rem; opacity: .75; font-weight: 300; margin-top: 1px; }
+.cars-karani-tag {
+  background: rgba(255,255,255,.15); border-radius: 50px;
+  padding: 4px 12px; font-size: .75rem; white-space: nowrap; flex-shrink: 0;
+}
+.cars-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px; padding: 16px;
+}
+.car-tile {
+  border: 1.5px solid rgba(139,90,43,0.18);
+  border-radius: 12px; overflow: hidden; cursor: pointer;
+  transition: all .2s; background: var(--fog);
+  position: relative;
+}
+.car-tile:hover { border-color: var(--bark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(61,43,26,0.12); }
+.car-tile.selected { border-color: var(--bark); background: rgba(92,61,34,0.06); }
+.car-tile.selected .car-check { opacity: 1; }
+.car-photo {
+  height: 110px; display: flex; align-items: center; justify-content: center;
+  font-size: 3rem; position: relative;
+  background: linear-gradient(145deg, rgba(92,61,34,0.08), rgba(61,43,26,0.04));
+}
+.car-check {
+  position: absolute; top: 8px; right: 8px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--bark); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; opacity: 0; transition: opacity .2s;
+}
+.car-info { padding: 10px 12px 12px; }
+.car-name { font-weight: 500; font-size: .88rem; color: var(--soil); }
+.car-year { font-size: .76rem; color: var(--stone); margin-top: 1px; }
+.car-price { font-size: .82rem; color: var(--bark); font-weight: 500; margin-top: 6px; }
+.car-capacity { font-size: .73rem; color: var(--muted); margin-top: 2px; }
+.cars-fields {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  padding: 0 16px 16px; border-top: 1px solid rgba(139,90,43,0.1); margin-top: 4px; padding-top: 14px;
+}
+.cars-note {
+  margin: 0 16px 14px;
+  background: rgba(92,61,34,0.06);
+  border-left: 3px solid var(--sand);
+  padding: 10px 14px; border-radius: 0 8px 8px 0;
+  font-size: .8rem; color: var(--muted); font-weight: 300;
+}
+.cars-selected-summary {
+  background: rgba(92,61,34,0.06); border-radius: 8px;
+  padding: 8px 12px; margin: 0 16px 14px;
+  font-size: .82rem; color: var(--bark); display: none;
+}
+.cars-selected-summary.show { display: block; }
+
+/* ── ANIMATIONS ── */
+@media (prefers-reduced-motion: no-preference) {
+  .fade-up {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .exp-card, .blog-card { transition: transform .3s, box-shadow .3s; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Utanu<span>Farm</span></div>
+  <ul class="nav-links">
+    <li><a href="#experiences">Experiences</a></li>
+    <li><a href="#book">Book a Visit</a></li>
+    <li><a href="#kids">Kids Program</a></li>
+    <li><a href="#blog">Journal</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#book" class="nav-cta">Book Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-texture"></div>
+  <div style="position:relative; z-index:1;">
+    <div class="hero-badge">🌿 Kiambu County, Kenya</div>
+    <h1>Where the city<br>finds its <em>breath</em></h1>
+    <p>Farm experiences, kids programs, and nature retreats rooted in Kenya's living soil.</p>
+    <div class="hero-actions">
+      <a href="#book" class="btn-primary">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Reserve Your Day
+      </a>
+      <a href="#experiences" class="btn-ghost">Explore Experiences</a>
+    </div>
+  </div>
+  <div class="hero-stat-bar">
+    <div class="hero-stat"><strong>12+</strong><span>Experiences</span></div>
+    <div class="hero-stat"><strong>5,000+</strong><span>Visitors</span></div>
+    <div class="hero-stat"><strong>40 acres</strong><span>Of Farm Land</span></div>
+    <div class="hero-stat"><strong>Every Day</strong><span>Open 7am–6pm</span></div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- EXPERIENCES -->
+<section class="experiences-section fade-up" id="experiences">
+  <div class="section-label">What We Offer</div>
+  <h2 class="section-title">Farm Experiences</h2>
+  <p class="section-sub">From school trips to corporate retreats — every visit is rooted in nature, community, and real Kenyan soil.</p>
+  <div class="exp-grid">
+    <div class="exp-card" onclick="prefillBooking('family','Family Farm Day')">
+      <div class="exp-card-img family">🐄</div>
+      <div class="exp-card-body">
+        <div class="exp-type">Family</div>
+        <h3>Family Farm Day</h3>
+        <p>Animal feeding, nature walks, and farm-to-table lunch. A full day out for the whole family.</p>
+        <div class="exp-footer">
+          <div class="exp-price">KES 1,500 <span>/ person</span></div>
+          <button class="exp-book" onclick="event.stopPropagation(); prefillBooking('family','Family Farm Day')">Book →</button>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card" onclick="prefillBooking('school','School Field Trip')">
+      <div class="exp-card-img school">🌱</div>
+      <div class="exp-card-body">
+        <div class="exp-type">School</div>
+        <h3>School Field Trip</h3>
+        <p>Guided sessions on agriculture, ecology, and animal science. Aligned with CBC curriculum.</p>
+        <div class="exp-footer">
+          <div class="exp-price">KES 800 <span>/ learner</span></div>
+          <button class="exp-book" onclick="event.stopPropagation(); prefillBooking('school','School Field Trip')">Book →</button>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card" onclick="prefillBooking('corporate','Corporate Team Building')">
+      <div class="exp-card-img corp">🤝</div>
+      <div class="exp-card-body">
+        <div class="exp-type">Corporate</div>
+        <h3>Corporate Team Building</h3>
+        <p>Farm challenges, outdoor problem-solving, and catered meals. Build your team differently.</p>
+        <div class="exp-footer">
+          <div class="exp-price">KES 3,500 <span>/ person</span></div>
+          <button class="exp-book" onclick="event.stopPropagation(); prefillBooking('corporate','Corporate Team Building')">Book →</button>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card" onclick="prefillBooking('birthday','Birthday Bash on the Farm')">
+      <div class="exp-card-img bday">🎉</div>
+      <div class="exp-card-body">
+        <div class="exp-type">Birthday</div>
+        <h3>Birthday Bash on the Farm</h3>
+        <p>Private farm experience with activities, cake, and memories your child will talk about for years.</p>
+        <div class="exp-footer">
+          <div class="exp-price">KES 2,000 <span>/ person</span></div>
+          <button class="exp-book" onclick="event.stopPropagation(); prefillBooking('birthday','Birthday Bash on the Farm')">Book →</button>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card" onclick="prefillBooking('general','Sunrise Nature Walk')">
+      <div class="exp-card-img walk">🌅</div>
+      <div class="exp-card-body">
+        <div class="exp-type">Nature</div>
+        <h3>Sunrise Nature Walk</h3>
+        <p>A peaceful early morning guided walk through the farm as Kenya wakes up around you.</p>
+        <div class="exp-footer">
+          <div class="exp-price">KES 500 <span>/ person</span></div>
+          <button class="exp-book" onclick="event.stopPropagation(); prefillBooking('general','Sunrise Nature Walk')">Book →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking-section fade-up" id="book">
+  <div class="section-label">Reserve Your Visit</div>
+  <h2 class="section-title">Book a Day at the Farm</h2>
+  <div class="booking-wrap">
+    <div class="booking-info">
+      <h3>What to expect when you book</h3>
+      <p>We confirm all bookings within 24 hours. Our team will call you to discuss your specific needs and ensure your day is perfect.</p>
+      <ul class="booking-perks">
+        <li><div class="perk-dot">✓</div> Booking confirmed within 24 hours</li>
+        <li><div class="perk-dot">📞</div> Personal call from our team</li>
+        <li><div class="perk-dot">🍽️</div> Farm meals available on request</li>
+        <li><div class="perk-dot">🧒</div> Kids programs run every weekend</li>
+        <li><div class="perk-dot">🚗</div> Parking available on-site</li>
+        <li><div class="perk-dot">🏎️</div> Classic car hire via Mr. Karani</li>
+        <li><div class="perk-dot">💳</div> Pay securely via M-Pesa</li>
+      </ul>
+    </div>
+
+    <div class="booking-form-card">
+      <div class="form-title">Make a Reservation</div>
+      <form id="booking-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="b-name">Full Name *</label>
+            <input type="text" id="b-name" placeholder="Jane Njeri" required>
+          </div>
+          <div class="form-group">
+            <label for="b-phone">Phone Number *</label>
+            <input type="tel" id="b-phone" placeholder="0712 345 678" required>
+          </div>
+          <div class="form-group">
+            <label for="b-email">Email Address</label>
+            <input type="email" id="b-email" placeholder="jane@example.com">
+          </div>
+          <div class="form-group">
+            <label for="b-people">Number of People *</label>
+            <input type="number" id="b-people" min="1" max="100" value="4" required>
+          </div>
+          <div class="form-group full">
+            <label>Experience Type *</label>
+            <div class="form-toggle-group">
+              <label class="form-toggle active" id="t-family"><input type="radio" name="type" value="family" checked> 🐄 Family</label>
+              <label class="form-toggle" id="t-school"><input type="radio" name="type" value="school"> 🌱 School</label>
+              <label class="form-toggle" id="t-corporate"><input type="radio" name="type" value="corporate"> 🤝 Corporate</label>
+              <label class="form-toggle" id="t-birthday"><input type="radio" name="type" value="birthday"> 🎉 Birthday</label>
+              <label class="form-toggle" id="t-general"><input type="radio" name="type" value="general"> 🌅 Walk</label>
+              <label class="form-toggle" id="t-bootcamp"><input type="radio" name="type" value="bootcamp"> 💪 Bootcamp</label>
+              <label class="form-toggle" id="t-event"><input type="radio" name="type" value="event"> 🥂 Event / Wedding</label>
+              <label class="form-toggle" id="t-catering"><input type="radio" name="type" value="catering"> 🍱 Catering</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="b-date">Preferred Date *</label>
+            <input type="date" id="b-date" required>
+          </div>
+          <div class="form-group">
+            <label for="b-slot">Preferred Time</label>
+            <select id="b-slot">
+              <option value="">Select a time</option>
+              <option value="7:00 AM">7:00 AM — Sunrise Walk</option>
+              <option value="9:00 AM">9:00 AM — Morning Session</option>
+              <option value="11:00 AM">11:00 AM — Late Morning</option>
+              <option value="2:00 PM">2:00 PM — Afternoon</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Farm Meal</label>
+            <label class="food-check-wrap" id="food-check-label">
+              <input type="checkbox" id="b-food" onchange="toggleMenu(this.checked)">
+              <span id="food-check-text">Include farm-to-table meal (+ KES 800 per person)</span>
+            </label>
+            <!-- MENU REVEAL -->
+            <div class="menu-reveal" id="menu-reveal">
+              <div class="menu-card">
+                <div class="menu-card-header">
+                  <div>
+                    <h4>Today's Farm-to-Table Menu</h4>
+                    <p>Seasonal ingredients harvested right here at Utanu</p>
+                  </div>
+                  <div class="menu-price-tag">KES 800 / person</div>
+                </div>
+                <div class="menu-courses">
+                  <div class="menu-course">
+                    <div class="menu-course-label">To Start</div>
+                    <div class="menu-items">
+                      <div class="menu-item">
+                        <span class="menu-item-dot"></span>
+                        <div><span class="menu-item-name">Garden vegetable soup</span> <span class="menu-item-desc">— slow-cooked with farm herbs &amp; bone broth</span></div>
+                      </div>
+                      <div class="menu-item">
+                        <span class="menu-item-dot"></span>
+                        <div><span class="menu-item-name">Fresh passion fruit juice</span> <span class="menu-item-desc">— pressed from our orchard, no added sugar</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="menu-course">
+                    <div class="menu-course-label">Main Course</div>
+                    <div class="menu-items">
+                      <div class="menu-item">
+                        <span class="menu-item-dot"></span>
+                        <div><span class="menu-item-name">Slow-roasted farm chicken</span> <span class="menu-item-desc">— free-range, marinated in local spices &amp; lemon</span></div>
+                      </div>
+                      <div class="menu-item">
+                        <span class="menu-item-dot"></span>
+                        <div><span class="menu-item-name">Githeri wa shamba</span> <span class="menu-item-desc">— heirloom beans &amp; maize grown on the farm</span></div>
+                      </div>
+                      <div class="menu-item">
+                        <span class="menu-item-dot"></span>
+                        <div><span class="menu-item-name">Steamed seasonal greens</span> <span class="menu-item-desc">— sukuma wiki, managu, or terere depending on season</span></div>
+                      </div>
+                      <div class="menu-item">
+                        <span class="menu-item-dot"></span>
+                        <div><span class="menu-item-name">Ugali ya wimbi</span> <span class="menu-item-desc">— finger millet, stone-ground on site</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="menu-course">
+                    <div class="menu-course-label">To Finish</div>
+                    <div class="menu-items">
+                      <div class="menu-item">
+                        <span class="menu-item-dot"></span>
+                        <div><span class="menu-item-name">Roasted sweet potato &amp; honey</span> <span class="menu-item-desc">— served warm with raw Utanu honey</span></div>
+                      </div>
+                      <div class="menu-item">
+                        <span class="menu-item-dot"></span>
+                        <div><span class="menu-item-name">Seasonal fruit platter</span> <span class="menu-item-desc">— picked the morning of your visit</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="menu-note">
+                  🌿 Vegetarian options available for all dishes. Dietary needs? Add a note below and our kitchen will accommodate you.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group full">
+            <label>🏎️ Classic Car Hire — Optional Add-On</label>
+            <label class="food-check-wrap" id="cars-check-label" onclick="toggleCars(document.getElementById('b-cars').checked)">
+              <input type="checkbox" id="b-cars" onchange="toggleCars(this.checked)" onclick="event.stopPropagation()">
+              <span id="cars-check-text">Add a classic car experience (weddings, events, birthdays &amp; more)</span>
+            </label>
+            <div class="cars-reveal" id="cars-reveal">
+              <div class="cars-card">
+                <div class="cars-card-header">
+                  <div>
+                    <h4>Mr. Karani's Classic Car Fleet</h4>
+                    <p>Select one or more — charged per booking, paid via Utanu</p>
+                  </div>
+                  <div class="cars-karani-tag">🔑 Karani Classics</div>
+                </div>
+                <div class="cars-grid" id="cars-grid">
+                  <!-- Rendered by JS -->
+                </div>
+                <div class="cars-selected-summary" id="cars-summary"></div>
+                <div class="cars-fields">
+                  <div class="form-group">
+                    <label for="b-cars-hours">Hours needed</label>
+                    <select id="b-cars-hours" style="background:var(--cream);border:1.5px solid rgba(139,90,43,0.15);border-radius:10px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text);outline:none;width:100%">
+                      <option value="2">2 hours</option>
+                      <option value="4" selected>4 hours</option>
+                      <option value="6">6 hours</option>
+                      <option value="8">Full day (8h)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="b-cars-pickup">Pickup / departure location</label>
+                    <input type="text" id="b-cars-pickup" placeholder="e.g. Utanu Farm gates" style="background:var(--cream);border:1.5px solid rgba(139,90,43,0.15);border-radius:10px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text);outline:none;width:100%;transition:border-color .2s" onfocus="this.style.borderColor='var(--fern)'" onblur="this.style.borderColor='rgba(139,90,43,0.15)'">
+                  </div>
+                </div>
+                <div class="cars-note">
+                  🏎️ Cars are provided by Mr. Karani and coordinated by Utanu Farm. A Utanu team member will confirm logistics when we call you.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group full">
+            <label for="b-notes">Special Requests</label>
+            <textarea id="b-notes" placeholder="Dietary needs, accessibility, large groups, anything we should know..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="form-submit" id="submit-btn">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Send Reservation Request
+        </button>
+        <div id="status-msg" class="status-msg"></div>
+        <p class="form-note">We'll confirm via phone within 24 hours. No payment required to book.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="blog-section fade-up" id="blog">
+  <div class="section-label">From the Farm</div>
+  <h2 class="section-title">The Utanu Journal</h2>
+  <p class="section-sub">Stories, guides, and seasonal updates from our corner of Kiambu.</p>
+  <div class="blog-grid">
+    <div class="blog-card">
+      <div class="blog-card-img">🌿</div>
+      <div class="blog-card-body">
+        <span class="blog-tag">Farm Life</span>
+        <h3>What Happens When 80 Schoolkids Discover Where Their Food Comes From</h3>
+        <p>Last Tuesday, three classes from Kikuyu spent a day with our cows, compost heap, and kitchen garden — and walked away changed.</p>
+        <div class="blog-meta">
+          <span>March 2026</span>
+          <a href="#" class="blog-link">Read more →</a>
+        </div>
+      </div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-card-img">🌧️</div>
+      <div class="blog-card-body">
+        <span class="blog-tag">Seasons</span>
+        <h3>The Long Rains Are Back — Here's What's Growing</h3>
+        <p>April is the best time to visit. Everything is alive.</p>
+        <div class="blog-meta">
+          <span>March 2026</span>
+          <a href="#" class="blog-link">Read more →</a>
+        </div>
+      </div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-card-img">🐓</div>
+      <div class="blog-card-body">
+        <span class="blog-tag">Animals</span>
+        <h3>Meet Jemimah: Our New Free-Range Hen Who Escaped Twice</h3>
+        <p>She's fast, charismatic, and the children love her.</p>
+        <div class="blog-meta">
+          <span>Feb 2026</span>
+          <a href="#" class="blog-link">Read more →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">Utanu<span>Farm</span></span>
+      <p>A working farm and nature experience space in Kiambu County, Kenya. Open every day from 7am to 6pm.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Experiences</h4>
+      <ul>
+        <li><a href="#experiences">Family Days</a></li>
+        <li><a href="#experiences">School Trips</a></li>
+        <li><a href="#experiences">Corporate</a></li>
+        <li><a href="#experiences">Birthdays</a></li>
+        <li><a href="#experiences">Nature Walks</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Visit</h4>
+      <ul>
+        <li><a href="#book">Book a Day</a></li>
+        <li><a href="#kids">Kids Program</a></li>
+        <li><a href="#blog">Journal</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">How to Get Here</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+254700000000">0700 000 000</a></li>
+        <li><a href="mailto:hello@utanu.farm">hello@utanu.farm</a></li>
+        <li><a href="#">WhatsApp Us</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Utanu Farm. All rights reserved.</p>
+    <p>Built with 💚 in Kiambu</p>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h3 id="modal-title">Confirm Booking?</h3>
+    <p id="modal-body">Please confirm your reservation details before submitting.</p>
+    <div id="modal-summary" style="background:var(--fog);border-radius:10px;padding:16px;margin-bottom:16px;font-size:.875rem;color:var(--muted);"></div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal()">Edit Details</button>
+      <button class="modal-confirm" id="modal-confirm-btn">Yes, Submit Request</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+// ── SUPABASE CLIENT ──
+const SUPABASE_URL     = 'https://owfrejfletnzwvcjzwme.supabase.co';
+const SUPABASE_ANON_KEY= 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93ZnJlamZsZXRuend2Y2p6d21lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3OTk1MjEsImV4cCI6MjA4OTM3NTUyMX0.2m_EOJzFBla0f8Bxj2_sGp5yvMUwEeWN3JyRAKdW2_0';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function supabaseInsert(table, data) {
+  const { data: result, error } = await sb.from(table).insert([data]).select();
+  if (error) throw new Error(error.message || 'Booking failed');
+  return result;
+}
+
+
+// ── MR. KARANI'S FLEET ──
+const KARANI_FLEET = [
+  { id:'merc-230', name:'Mercedes-Benz 230', year:'1968', emoji:'🚗', color:'Ivory White', price_per_hour:8000, capacity:'Up to 4 passengers', desc:'Sleek W110 saloon — timeless German elegance' },
+  { id:'roller-sw', name:'Rolls-Royce Silver Shadow', year:'1972', emoji:'🚗', color:'Champagne Gold', price_per_hour:18000, capacity:'Up to 4 passengers', desc:'The pinnacle of British luxury motoring' },
+  { id:'jaguar-mk2', name:'Jaguar Mark 2', year:'1964', emoji:'🚗', color:'British Racing Green', price_per_hour:12000, capacity:'Up to 4 passengers', desc:'Purring 3.8L — the quintessential English classic' },
+  { id:'ford-mustang', name:'Ford Mustang Fastback', year:'1966', emoji:'🚗', color:'Candy Apple Red', price_per_hour:14000, capacity:'2 passengers', desc:'Iconic American muscle — make an entrance' },
+  { id:'vw-beetle', name:'Volkswagen Beetle', year:'1974', emoji:'🚗', color:'Sky Blue', price_per_hour:6000, capacity:'Up to 3 passengers', desc:'Charming &amp; cheerful — perfect for playful occasions' },
+  { id:'landrover-s2', name:'Land Rover Series II', year:'1962', emoji:'🚙', color:'Olive Green', price_per_hour:9000, capacity:'Up to 6 passengers', desc:'Open-top farm adventure or wedding convoy' },
+  { id:'peugeot-404', name:'Peugeot 404 Cabriolet', year:'1969', emoji:'🚗', color:'Pearl White', price_per_hour:7500, capacity:'Up to 3 passengers', desc:'French elegance — rare open-top convert' },
+  { id:'austin-cambridge', name:'Austin Cambridge', year:'1961', emoji:'🚗', color:'Two-Tone Blue/White', price_per_hour:5500, capacity:'Up to 4 passengers', desc:'Classic British family saloon with charm' },
+];
+
+let selectedCars = new Set();
+
+function renderCarsGrid() {
+  const grid = document.getElementById('cars-grid');
+  grid.innerHTML = KARANI_FLEET.map(car => `
+    <div class="car-tile ${selectedCars.has(car.id) ? 'selected' : ''}" onclick="toggleCarSelect('${car.id}')" title="${car.desc}">
+      <div class="car-photo">
+        <span>${car.emoji}</span>
+        <div class="car-check">✓</div>
+      </div>
+      <div class="car-info">
+        <div class="car-name">${car.name}</div>
+        <div class="car-year">${car.year} &middot; ${car.color}</div>
+        <div class="car-price">KES ${car.price_per_hour.toLocaleString()} / hr</div>
+        <div class="car-capacity">${car.capacity}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleCarSelect(id) {
+  if (selectedCars.has(id)) { selectedCars.delete(id); }
+  else { selectedCars.add(id); }
+  renderCarsGrid();
+  updateCarsSummary();
+}
+
+function updateCarsSummary() {
+  const el = document.getElementById('cars-summary');
+  if (selectedCars.size === 0) { el.classList.remove('show'); return; }
+  const hours = parseInt(document.getElementById('b-cars-hours')?.value || 4);
+  let total = 0;
+  const names = [];
+  selectedCars.forEach(id => {
+    const car = KARANI_FLEET.find(c => c.id === id);
+    if (car) { total += car.price_per_hour * hours; names.push(car.name); }
+  });
+  el.innerHTML = '🏎️ <strong>' + names.join(', ') + '</strong> &middot; ' + hours + 'h &middot; Est. <strong>KES ' + total.toLocaleString() + '</strong>';
+  el.classList.add('show');
+}
+
+// Update summary when hours change
+document.addEventListener('change', e => {
+  if (e.target.id === 'b-cars-hours') updateCarsSummary();
+});
+
+// ── CARS TOGGLE ──
+function toggleCars(checked) {
+  const reveal = document.getElementById('cars-reveal');
+  const label  = document.getElementById('cars-check-label');
+  if (checked) {
+    reveal.classList.add('open');
+    label.style.borderColor = 'var(--bark)';
+    renderCarsGrid();
+  } else {
+    reveal.classList.remove('open');
+    label.style.borderColor = '';
+    selectedCars.clear();
+  }
+}
+
+// ── MENU TOGGLE ──
+function toggleMenu(checked) {
+  const reveal = document.getElementById('menu-reveal');
+  const label  = document.getElementById('food-check-label');
+  if (checked) {
+    reveal.classList.add('open');
+    label.style.borderColor = 'var(--fern)';
+  } else {
+    reveal.classList.remove('open');
+    label.style.borderColor = '';
+  }
+}
+
+// ── FORM TOGGLES ──
+document.querySelectorAll('.form-toggle input').forEach(radio => {
+  radio.addEventListener('change', () => {
+    document.querySelectorAll('.form-toggle').forEach(l => l.classList.remove('active'));
+    radio.parentElement.classList.add('active');
+  });
+});
+
+// Set min date to today
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('b-date').min = today;
+
+// ── PREFILL FROM EXPERIENCE CARDS ──
+function prefillBooking(type, name) {
+  document.querySelector(`input[value="${type}"]`).checked = true;
+  document.querySelectorAll('.form-toggle').forEach(l => l.classList.remove('active'));
+  document.getElementById(`t-${type}`).classList.add('active');
+  document.getElementById('book').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── MODAL ──
+let pendingData = null;
+
+function openModal(data) {
+  pendingData = data;
+  const typeLabels = {family:'Family Day',school:'School Trip',corporate:'Corporate',birthday:'Birthday',general:'Nature Walk',bootcamp:'Bootcamp',event:'Event / Wedding',catering:'Catering'};
+  document.getElementById('modal-summary').innerHTML = `
+    <strong>${data.name}</strong> · ${data.phone}<br>
+    ${typeLabels[data.type] || data.type} · ${data.people} people<br>
+    📅 ${data.booking_date}${data.time_slot ? ' at ' + data.time_slot : ''}
+    ${data.food_included ? `<br><br>🍽️ <strong>Farm meal included</strong> (KES ${(data.people * 800).toLocaleString()} total)<br><span style="font-size:.82rem;color:var(--stone)">Roasted chicken · Githeri wa shamba · Wimbi ugali · Seasonal fruits</span>` : ''}
+    ${data.special_requests ? '<br><br>📝 ' + data.special_requests : ''}
+    ${data.cars_selected && data.cars_selected.length > 0 ? '<br><br>🏎️ <strong>Classic cars:</strong> ' + data.cars_selected.join(', ') + '<br><span style="font-size:.82rem;color:var(--stone)">' + data.cars_hours + 'h hire · Pickup: ' + (data.cars_pickup || 'TBC') + '</span>' : ''}
+  `;
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  pendingData = null;
+}
+
+document.getElementById('modal-confirm-btn').addEventListener('click', async () => {
+  if (!pendingData) return;
+  closeModal();
+  await submitBooking(pendingData);
+});
+
+// ── FORM SUBMIT ──
+document.getElementById('booking-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const name  = document.getElementById('b-name').value.trim();
+  const phone = document.getElementById('b-phone').value.trim();
+  const email = document.getElementById('b-email').value.trim();
+  const people = parseInt(document.getElementById('b-people').value);
+  const type  = document.querySelector('input[name="type"]:checked').value;
+  const date  = document.getElementById('b-date').value;
+  const slot  = document.getElementById('b-slot').value;
+  const food  = document.getElementById('b-food').checked;
+  const notes = document.getElementById('b-notes').value.trim();
+
+  if (!name || !phone || !date || !people) {
+    showStatus('error', 'Please fill in all required fields.');
+    return;
+  }
+  if (!/^(07|01|\+2547|\+2541)\d{8}$/.test(phone.replace(/\s/g,''))) {
+    showStatus('error', 'Please enter a valid Kenyan phone number.');
+    return;
+  }
+
+  const carsWanted = document.getElementById('b-cars').checked;
+  const carsHours = parseInt(document.getElementById('b-cars-hours').value) || 4;
+  const carsPickup = document.getElementById('b-cars-pickup').value.trim();
+  const carsSelected = carsWanted ? Array.from(selectedCars).map(id => KARANI_FLEET.find(c=>c.id===id)?.name).filter(Boolean) : [];
+
+  const bookingData = {
+    name, phone, email: email || null,
+    type, people, booking_date: date,
+    time_slot: slot || null,
+    food_included: food,
+    cars_requested: carsWanted && carsSelected.length > 0,
+    cars_selected: carsSelected,
+    cars_hours: carsSelected.length > 0 ? carsHours : null,
+    cars_pickup: carsSelected.length > 0 ? (carsPickup || null) : null,
+    special_requests: notes || null,
+    status: 'pending'
+  };
+
+  openModal(bookingData);
+});
+
+async function submitBooking(data) {
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ Sending...';
+  showStatus('loading', 'Submitting your reservation...');
+
+  try {
+    // Check if Supabase is configured
+    if (false) { // Supabase connected
+      // Demo mode — simulate success
+      await new Promise(r => setTimeout(r, 1500));
+      showStatus('success', `🎉 Booking received, ${data.name.split(' ')[0]}! We'll call ${data.phone} within 24 hours to confirm.`);
+      document.getElementById('booking-form').reset();
+      document.getElementById('menu-reveal').classList.remove('open');
+      document.getElementById('food-check-label').style.borderColor = '';
+      document.getElementById('cars-reveal').classList.remove('open');
+      document.getElementById('cars-check-label').style.borderColor = '';
+      selectedCars.clear();
+      document.getElementById('cars-reveal').classList.remove('open');
+      document.getElementById('cars-check-label').style.borderColor = '';
+      selectedCars.clear();
+      document.querySelectorAll('.form-toggle').forEach(l => l.classList.remove('active'));
+      document.getElementById('t-family').classList.add('active');
+    } else {
+      await supabaseInsert('bookings', data);
+      showStatus('success', `🎉 Booking received, ${data.name.split(' ')[0]}! We'll call ${data.phone} within 24 hours to confirm.`);
+      document.getElementById('booking-form').reset();
+      document.getElementById('menu-reveal').classList.remove('open');
+      document.getElementById('food-check-label').style.borderColor = '';
+      document.getElementById('cars-reveal').classList.remove('open');
+      document.getElementById('cars-check-label').style.borderColor = '';
+      selectedCars.clear();
+    }
+  } catch (err) {
+    showStatus('error', `Booking failed: ${err.message}. Please try WhatsApp or call us directly.`);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Send Reservation Request';
+  }
+}
+
+function showStatus(type, msg) {
+  const el = document.getElementById('status-msg');
+  el.className = 'status-msg ' + type;
+  el.textContent = msg;
+}
+
+// ── SCROLL ANIMATIONS ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el
