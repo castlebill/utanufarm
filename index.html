@@ -952,11 +952,11 @@ footer {
   </div>
 </div>
 
-<script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/supabase-js/2.39.3/umd/supabase.min.js" crossorigin="anonymous"></script>
 <script>
-// Fallback: if unpkg blocked, load from cdnjs
+// Fallback: if cdnjs blocked, load from unpkg
 if (typeof supabase === 'undefined') {
-  document.write('<scr' + 'ipt src="https://cdnjs.cloudflare.com/ajax/libs/supabase-js/2.39.3/umd/supabase.min.js" crossorigin="anonymous"><\/scr' + 'ipt>');
+  document.write('<scr' + 'ipt src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.min.js" crossorigin="anonymous"><\/scr' + 'ipt>');
 }
 </script>
 <script>
